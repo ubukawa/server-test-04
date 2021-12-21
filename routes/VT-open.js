@@ -14,8 +14,12 @@ let mbtilesPool = {}
 let busy = false
 
 var app = express()
-app.use(cors())
-
+//app.use(cors())
+const corsOption = {
+ origin: '*',
+ credentials: true
+}
+app.use(cors(corsOption)) 
 
 //specify the target mbtiles from the path
 const getMBTiles = async (t, z, x, y) => {

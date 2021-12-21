@@ -15,7 +15,11 @@ const DailyRotateFile = require('winston-daily-rotate-file');
 const config = require('config');
 const fs = require('fs');
 const cors = require('cors');
-const spdy = require('spdy') //for https
+const spdy = require('spdy'); //for https
+const corsOption = {
+ origin: '*',
+ credentials: true
+};
 // for VT (until here)
 
 // const from config(hjson)
@@ -83,7 +87,7 @@ app.locals.msalClient = new msal.ConfidentialClientApplication(msalConfig);
 // NOTE: Uses default in-memory session store, which is not
 // suitable for production
 app.use(session({
-  secret: 'your_secret_value_here',
+  secret: process.env.OAUTH_CLIENT_SECRET,
   resave: false,
   saveUninitialized: false,
   unset: 'destroy'
@@ -124,6 +128,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //app.use(cors()); //later
+app.use(cors(corsOption)) //test
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
