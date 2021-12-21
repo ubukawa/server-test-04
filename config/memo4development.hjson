@@ -1,0 +1,17 @@
+{
+ morganFormat: tiny
+ htdocsPath: htdocs
+ privkeyPath: somewhere/privkey.pem
+ fullchainPath: somewhere/cert.pem
+ logDirPath: log
+ port: 8080
+ tz:{
+  osm-z456: 6
+ }
+ sTileName:{
+  osm-z456: small-scale
+ }
+ defaultZ: 6
+ mbtilesDir: mbtiles
+}
+
