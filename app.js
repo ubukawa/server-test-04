@@ -15,18 +15,21 @@ const DailyRotateFile = require('winston-daily-rotate-file');
 const config = require('config');
 const fs = require('fs');
 const cors = require('cors');
-//const spdy = require('spdy') //for https
+const spdy = require('spdy') //for https
 // for VT (until here)
 
 // const from config(hjson)
 const morganFormat = config.get('morganFormat');
 const logDirPath = config.get('logDirPath');
 const port = config.get('port');
+const privkeyPath = config.get('privkeyPath');
+const fullchainPath = config.get('fullchainPath');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 var vtRouter = require('./routes/VT'); //if you want to use a path without passwork, use route/VT-open
+var vtORouter = require('./routes/VT-open'); //for test only
 var tilemapRouter = require('./routes/tilemap');
 
 // logger configuration (no semicolon)
@@ -127,6 +130,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/vt', vtRouter);
+app.use('/vt-open', vtORouter);
 app.use('/tilemap', tilemapRouter);
 
 // catch 404 and forward to error handler
@@ -148,18 +152,19 @@ app.use(function(err, req, res, next) {
 //module.exports = app;
 
 
+/*
 //for http
 app.listen(port, () => {
     console.log(`Running at Port ${port} ...`)
 //app.listen(3000, () => {
 //console.log("running at port 3000 ...")
 })
+*/
 
-/*
 //for https
 spdy.createServer({
   key: fs.readFileSync(privkeyPath),
  cert: fs.readFileSync(fullchainPath)
 }, app).listen(port)
-*/
+
 

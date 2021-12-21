@@ -1,10 +1,14 @@
 {
  morganFormat: tiny
  htdocsPath: htdocs
- privkeyPath: ./somewhere/privkey.pem 
- fullchainPath: ./somewhere/cert.pem
+ privkeyPath: ./key/privkey.pem 
+ fullchainPath: ./key/cert.pem
  logDirPath: log
  port: 3000
  mbtilesDir: mbtiles
+ tilemapDir: tmap
+ maxTiles:{
+ ne-test: 3
+ }
 }
 
