@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session); //added
 const flash = require('connect-flash');
 const msal = require('@azure/msal-node');
 var createError = require('http-errors');
@@ -82,33 +81,7 @@ const msalConfig = {
 // Create msal application object
 app.locals.msalClient = new msal.ConfidentialClientApplication(msalConfig);
 
-//Session witl mysql (from here)////////////////////////
-const mysqlOptions ={
-  host: 'localhost',
-  port: 3306,
-  user: 'vectortile',
-  password: process.env.MYSQL_PASSWORD, 
-  database: process.env.MYSQL_DATABASE
-};
 
-const sessionStore = new MySQLStore(mysqlOptions);
-
-const sess = {
-  secret: process.env.OAUTH_CLIENT_SECRET,
-  cookie: {maxAge: 60000},
-  store: new MySQLStore(mysqlOptions),
-  resave: false,
-  saveUninitialized: false
-}
-
-//for production
-sess.cookie.secure = true;
-
-app.use(session(sess))
-
-//Session witl mysql (until here)////////////////////////
-
-/*
 //for Azure 
 // Session middleware
 // NOTE: Uses default in-memory session store, which is not
@@ -119,8 +92,6 @@ app.use(session({
   saveUninitialized: false,
   unset: 'destroy'
 }));
-*/
-
 
 // Flash middleware
 app.use(flash());
